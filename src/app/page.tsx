@@ -34,7 +34,9 @@ export default async function Home() {
               />
             </div>
 
-            <h2 className="mt-3 text-sm font-semibold">{item.title}</h2>
+            <h2 className="mt-3 text-sm font-mono font-semibold">
+              {item.title}
+            </h2>
 
             <p className="text-neutral-400 text-xs ">
               {item.year} &bull; {item.genres.map((g) => g.name).join(", ")}
