@@ -1,6 +1,12 @@
 import prisma from "@/lib/prisma/prisma";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "RED Series",
+  description: "Discover the latest and greatest series on RED Series.",
+};
 
 export const revalidate = 60;
 
