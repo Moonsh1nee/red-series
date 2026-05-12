@@ -1,8 +1,9 @@
-import { EpisodesCarousel } from "@/features/EpisodesCarousel";
-import { SeriesMain } from "@/features/SeriesMain";
-import { VideoModal } from "@/features/VideoModal";
+import { EpisodesCarousel } from "@/features/series/EpisodesCarousel";
+import { SeriesMain } from "@/features/series/SeriesMain";
+import { VideoModal } from "@/features/series/VideoModal";
 import prisma from "@/lib/prisma/prisma";
 import { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 type TParams = {
@@ -89,7 +90,17 @@ export default async function SeriesPage({ params, searchParams }: TParams) {
     );
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-black text-white relative">
+      <Image
+        src={series.imageUrl}
+        alt={series.title}
+        fill
+        priority
+        className="object-cover"
+      />
+
+      <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent" />
+
       <SeriesMain series={series} />
       <EpisodesCarousel series={series} />
       {activeEpisode && (
