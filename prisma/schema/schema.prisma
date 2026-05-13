@@ -6,3 +6,72 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// ====================== MODELS ======================
+
+model Genre {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  series Series[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("genres")
+}
+
+model Series {
+  id          String  @id @default(cuid())
+  title       String
+  slug        String  @unique
+  description String
+  year        Int?
+  ratingAge   String? @map("rating_age")
+  imageUrl    String  @map("image_url")
+  posterUrl   String  @map("poster_url")
+
+  genres  Genre[]
+  seasons Season[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("series")
+}
+
+model Season {
+  id       String  @id @default(cuid())
+  number   Int
+  title    String?
+  seriesId String
+  series   Series  @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  episodes Episode[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([seriesId, number])
+  @@map("seasons")
+}
+
+model Episode {
+  id     String @id @default(cuid())
+  title  String
+  number Int
+
+  durationSec  Int    @map("duration_sec")
+  thumbnailUrl String @map("thumbnail_url")
+  videoUrl     String @map("video_url")
+
+  seasonId String
+  season   Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([seasonId, number])
+  @@map("episodes")
+}

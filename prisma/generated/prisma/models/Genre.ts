@@ -322,6 +322,14 @@ export type GenreOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type GenreCreateNestedManyWithoutSeriesInput = {
   create?: Prisma.XOR<Prisma.GenreCreateWithoutSeriesInput, Prisma.GenreUncheckedCreateWithoutSeriesInput> | Prisma.GenreCreateWithoutSeriesInput[] | Prisma.GenreUncheckedCreateWithoutSeriesInput[]
   connectOrCreate?: Prisma.GenreCreateOrConnectWithoutSeriesInput | Prisma.GenreCreateOrConnectWithoutSeriesInput[]

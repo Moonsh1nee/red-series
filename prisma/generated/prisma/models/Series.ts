@@ -257,7 +257,7 @@ export type SeriesWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Series"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Series"> | Date | string
   genres?: Prisma.GenreListRelationFilter
-  episodes?: Prisma.EpisodeListRelationFilter
+  seasons?: Prisma.SeasonListRelationFilter
 }
 
 export type SeriesOrderByWithRelationInput = {
@@ -272,7 +272,7 @@ export type SeriesOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   genres?: Prisma.GenreOrderByRelationAggregateInput
-  episodes?: Prisma.EpisodeOrderByRelationAggregateInput
+  seasons?: Prisma.SeasonOrderByRelationAggregateInput
 }
 
 export type SeriesWhereUniqueInput = Prisma.AtLeast<{
@@ -290,7 +290,7 @@ export type SeriesWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Series"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Series"> | Date | string
   genres?: Prisma.GenreListRelationFilter
-  episodes?: Prisma.EpisodeListRelationFilter
+  seasons?: Prisma.SeasonListRelationFilter
 }, "id" | "slug">
 
 export type SeriesOrderByWithAggregationInput = {
@@ -339,7 +339,7 @@ export type SeriesCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   genres?: Prisma.GenreCreateNestedManyWithoutSeriesInput
-  episodes?: Prisma.EpisodeCreateNestedManyWithoutSeriesInput
+  seasons?: Prisma.SeasonCreateNestedManyWithoutSeriesInput
 }
 
 export type SeriesUncheckedCreateInput = {
@@ -354,7 +354,7 @@ export type SeriesUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   genres?: Prisma.GenreUncheckedCreateNestedManyWithoutSeriesInput
-  episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutSeriesInput
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutSeriesInput
 }
 
 export type SeriesUpdateInput = {
@@ -369,7 +369,7 @@ export type SeriesUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   genres?: Prisma.GenreUpdateManyWithoutSeriesNestedInput
-  episodes?: Prisma.EpisodeUpdateManyWithoutSeriesNestedInput
+  seasons?: Prisma.SeasonUpdateManyWithoutSeriesNestedInput
 }
 
 export type SeriesUncheckedUpdateInput = {
@@ -384,7 +384,7 @@ export type SeriesUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   genres?: Prisma.GenreUncheckedUpdateManyWithoutSeriesNestedInput
-  episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutSeriesNestedInput
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutSeriesNestedInput
 }
 
 export type SeriesCreateManyInput = {
@@ -424,11 +424,6 @@ export type SeriesUncheckedUpdateManyInput = {
   posterUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type SeriesScalarRelationFilter = {
-  is?: Prisma.SeriesWhereInput
-  isNot?: Prisma.SeriesWhereInput
 }
 
 export type SeriesListRelationFilter = {
@@ -488,18 +483,9 @@ export type SeriesSumOrderByAggregateInput = {
   year?: Prisma.SortOrder
 }
 
-export type SeriesCreateNestedOneWithoutEpisodesInput = {
-  create?: Prisma.XOR<Prisma.SeriesCreateWithoutEpisodesInput, Prisma.SeriesUncheckedCreateWithoutEpisodesInput>
-  connectOrCreate?: Prisma.SeriesCreateOrConnectWithoutEpisodesInput
-  connect?: Prisma.SeriesWhereUniqueInput
-}
-
-export type SeriesUpdateOneRequiredWithoutEpisodesNestedInput = {
-  create?: Prisma.XOR<Prisma.SeriesCreateWithoutEpisodesInput, Prisma.SeriesUncheckedCreateWithoutEpisodesInput>
-  connectOrCreate?: Prisma.SeriesCreateOrConnectWithoutEpisodesInput
-  upsert?: Prisma.SeriesUpsertWithoutEpisodesInput
-  connect?: Prisma.SeriesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SeriesUpdateToOneWithWhereWithoutEpisodesInput, Prisma.SeriesUpdateWithoutEpisodesInput>, Prisma.SeriesUncheckedUpdateWithoutEpisodesInput>
+export type SeriesScalarRelationFilter = {
+  is?: Prisma.SeriesWhereInput
+  isNot?: Prisma.SeriesWhereInput
 }
 
 export type SeriesCreateNestedManyWithoutGenresInput = {
@@ -552,76 +538,18 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type SeriesCreateWithoutEpisodesInput = {
-  id?: string
-  title: string
-  slug: string
-  description: string
-  year?: number | null
-  ratingAge?: string | null
-  imageUrl: string
-  posterUrl: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  genres?: Prisma.GenreCreateNestedManyWithoutSeriesInput
+export type SeriesCreateNestedOneWithoutSeasonsInput = {
+  create?: Prisma.XOR<Prisma.SeriesCreateWithoutSeasonsInput, Prisma.SeriesUncheckedCreateWithoutSeasonsInput>
+  connectOrCreate?: Prisma.SeriesCreateOrConnectWithoutSeasonsInput
+  connect?: Prisma.SeriesWhereUniqueInput
 }
 
-export type SeriesUncheckedCreateWithoutEpisodesInput = {
-  id?: string
-  title: string
-  slug: string
-  description: string
-  year?: number | null
-  ratingAge?: string | null
-  imageUrl: string
-  posterUrl: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  genres?: Prisma.GenreUncheckedCreateNestedManyWithoutSeriesInput
-}
-
-export type SeriesCreateOrConnectWithoutEpisodesInput = {
-  where: Prisma.SeriesWhereUniqueInput
-  create: Prisma.XOR<Prisma.SeriesCreateWithoutEpisodesInput, Prisma.SeriesUncheckedCreateWithoutEpisodesInput>
-}
-
-export type SeriesUpsertWithoutEpisodesInput = {
-  update: Prisma.XOR<Prisma.SeriesUpdateWithoutEpisodesInput, Prisma.SeriesUncheckedUpdateWithoutEpisodesInput>
-  create: Prisma.XOR<Prisma.SeriesCreateWithoutEpisodesInput, Prisma.SeriesUncheckedCreateWithoutEpisodesInput>
-  where?: Prisma.SeriesWhereInput
-}
-
-export type SeriesUpdateToOneWithWhereWithoutEpisodesInput = {
-  where?: Prisma.SeriesWhereInput
-  data: Prisma.XOR<Prisma.SeriesUpdateWithoutEpisodesInput, Prisma.SeriesUncheckedUpdateWithoutEpisodesInput>
-}
-
-export type SeriesUpdateWithoutEpisodesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ratingAge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  posterUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  genres?: Prisma.GenreUpdateManyWithoutSeriesNestedInput
-}
-
-export type SeriesUncheckedUpdateWithoutEpisodesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ratingAge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  posterUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  genres?: Prisma.GenreUncheckedUpdateManyWithoutSeriesNestedInput
+export type SeriesUpdateOneRequiredWithoutSeasonsNestedInput = {
+  create?: Prisma.XOR<Prisma.SeriesCreateWithoutSeasonsInput, Prisma.SeriesUncheckedCreateWithoutSeasonsInput>
+  connectOrCreate?: Prisma.SeriesCreateOrConnectWithoutSeasonsInput
+  upsert?: Prisma.SeriesUpsertWithoutSeasonsInput
+  connect?: Prisma.SeriesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SeriesUpdateToOneWithWhereWithoutSeasonsInput, Prisma.SeriesUpdateWithoutSeasonsInput>, Prisma.SeriesUncheckedUpdateWithoutSeasonsInput>
 }
 
 export type SeriesCreateWithoutGenresInput = {
@@ -635,7 +563,7 @@ export type SeriesCreateWithoutGenresInput = {
   posterUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  episodes?: Prisma.EpisodeCreateNestedManyWithoutSeriesInput
+  seasons?: Prisma.SeasonCreateNestedManyWithoutSeriesInput
 }
 
 export type SeriesUncheckedCreateWithoutGenresInput = {
@@ -649,7 +577,7 @@ export type SeriesUncheckedCreateWithoutGenresInput = {
   posterUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutSeriesInput
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutSeriesInput
 }
 
 export type SeriesCreateOrConnectWithoutGenresInput = {
@@ -689,6 +617,78 @@ export type SeriesScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Series"> | Date | string
 }
 
+export type SeriesCreateWithoutSeasonsInput = {
+  id?: string
+  title: string
+  slug: string
+  description: string
+  year?: number | null
+  ratingAge?: string | null
+  imageUrl: string
+  posterUrl: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  genres?: Prisma.GenreCreateNestedManyWithoutSeriesInput
+}
+
+export type SeriesUncheckedCreateWithoutSeasonsInput = {
+  id?: string
+  title: string
+  slug: string
+  description: string
+  year?: number | null
+  ratingAge?: string | null
+  imageUrl: string
+  posterUrl: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  genres?: Prisma.GenreUncheckedCreateNestedManyWithoutSeriesInput
+}
+
+export type SeriesCreateOrConnectWithoutSeasonsInput = {
+  where: Prisma.SeriesWhereUniqueInput
+  create: Prisma.XOR<Prisma.SeriesCreateWithoutSeasonsInput, Prisma.SeriesUncheckedCreateWithoutSeasonsInput>
+}
+
+export type SeriesUpsertWithoutSeasonsInput = {
+  update: Prisma.XOR<Prisma.SeriesUpdateWithoutSeasonsInput, Prisma.SeriesUncheckedUpdateWithoutSeasonsInput>
+  create: Prisma.XOR<Prisma.SeriesCreateWithoutSeasonsInput, Prisma.SeriesUncheckedCreateWithoutSeasonsInput>
+  where?: Prisma.SeriesWhereInput
+}
+
+export type SeriesUpdateToOneWithWhereWithoutSeasonsInput = {
+  where?: Prisma.SeriesWhereInput
+  data: Prisma.XOR<Prisma.SeriesUpdateWithoutSeasonsInput, Prisma.SeriesUncheckedUpdateWithoutSeasonsInput>
+}
+
+export type SeriesUpdateWithoutSeasonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ratingAge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  posterUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  genres?: Prisma.GenreUpdateManyWithoutSeriesNestedInput
+}
+
+export type SeriesUncheckedUpdateWithoutSeasonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ratingAge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  posterUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  genres?: Prisma.GenreUncheckedUpdateManyWithoutSeriesNestedInput
+}
+
 export type SeriesUpdateWithoutGenresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -700,7 +700,7 @@ export type SeriesUpdateWithoutGenresInput = {
   posterUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  episodes?: Prisma.EpisodeUpdateManyWithoutSeriesNestedInput
+  seasons?: Prisma.SeasonUpdateManyWithoutSeriesNestedInput
 }
 
 export type SeriesUncheckedUpdateWithoutGenresInput = {
@@ -714,7 +714,7 @@ export type SeriesUncheckedUpdateWithoutGenresInput = {
   posterUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutSeriesNestedInput
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutSeriesNestedInput
 }
 
 export type SeriesUncheckedUpdateManyWithoutGenresInput = {
@@ -737,12 +737,12 @@ export type SeriesUncheckedUpdateManyWithoutGenresInput = {
 
 export type SeriesCountOutputType = {
   genres: number
-  episodes: number
+  seasons: number
 }
 
 export type SeriesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   genres?: boolean | SeriesCountOutputTypeCountGenresArgs
-  episodes?: boolean | SeriesCountOutputTypeCountEpisodesArgs
+  seasons?: boolean | SeriesCountOutputTypeCountSeasonsArgs
 }
 
 /**
@@ -765,8 +765,8 @@ export type SeriesCountOutputTypeCountGenresArgs<ExtArgs extends runtime.Types.E
 /**
  * SeriesCountOutputType without action
  */
-export type SeriesCountOutputTypeCountEpisodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EpisodeWhereInput
+export type SeriesCountOutputTypeCountSeasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SeasonWhereInput
 }
 
 
@@ -782,7 +782,7 @@ export type SeriesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   updatedAt?: boolean
   genres?: boolean | Prisma.Series$genresArgs<ExtArgs>
-  episodes?: boolean | Prisma.Series$episodesArgs<ExtArgs>
+  seasons?: boolean | Prisma.Series$seasonsArgs<ExtArgs>
   _count?: boolean | Prisma.SeriesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["series"]>
 
@@ -828,7 +828,7 @@ export type SeriesSelectScalar = {
 export type SeriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "year" | "ratingAge" | "imageUrl" | "posterUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["series"]>
 export type SeriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   genres?: boolean | Prisma.Series$genresArgs<ExtArgs>
-  episodes?: boolean | Prisma.Series$episodesArgs<ExtArgs>
+  seasons?: boolean | Prisma.Series$seasonsArgs<ExtArgs>
   _count?: boolean | Prisma.SeriesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SeriesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -838,7 +838,7 @@ export type $SeriesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Series"
   objects: {
     genres: Prisma.$GenrePayload<ExtArgs>[]
-    episodes: Prisma.$EpisodePayload<ExtArgs>[]
+    seasons: Prisma.$SeasonPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1246,7 +1246,7 @@ readonly fields: SeriesFieldRefs;
 export interface Prisma__SeriesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   genres<T extends Prisma.Series$genresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Series$genresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  episodes<T extends Prisma.Series$episodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Series$episodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  seasons<T extends Prisma.Series$seasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Series$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1703,27 +1703,27 @@ export type Series$genresArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * Series.episodes
+ * Series.seasons
  */
-export type Series$episodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Series$seasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Episode
+   * Select specific fields to fetch from the Season
    */
-  select?: Prisma.EpisodeSelect<ExtArgs> | null
+  select?: Prisma.SeasonSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Episode
+   * Omit specific fields from the Season
    */
-  omit?: Prisma.EpisodeOmit<ExtArgs> | null
+  omit?: Prisma.SeasonOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.EpisodeInclude<ExtArgs> | null
-  where?: Prisma.EpisodeWhereInput
-  orderBy?: Prisma.EpisodeOrderByWithRelationInput | Prisma.EpisodeOrderByWithRelationInput[]
-  cursor?: Prisma.EpisodeWhereUniqueInput
+  include?: Prisma.SeasonInclude<ExtArgs> | null
+  where?: Prisma.SeasonWhereInput
+  orderBy?: Prisma.SeasonOrderByWithRelationInput | Prisma.SeasonOrderByWithRelationInput[]
+  cursor?: Prisma.SeasonWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.EpisodeScalarFieldEnum | Prisma.EpisodeScalarFieldEnum[]
+  distinct?: Prisma.SeasonScalarFieldEnum | Prisma.SeasonScalarFieldEnum[]
 }
 
 /**

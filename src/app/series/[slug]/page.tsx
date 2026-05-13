@@ -28,22 +28,14 @@ export async function generateMetadata({ params }: TParams): Promise<Metadata> {
   return {
     title: series.title,
     description: series.description,
-    alternates: {
-      canonical: url,
-    },
+    alternates: { canonical: url },
     openGraph: {
       title: series.title,
       description: series.description,
       url,
       siteName: "RED Series",
       type: "video.tv_show",
-      images: [
-        {
-          url: series.imageUrl,
-          width: 1200,
-          height: 630,
-        },
-      ],
+      images: [{ url: series.imageUrl, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
@@ -51,17 +43,11 @@ export async function generateMetadata({ params }: TParams): Promise<Metadata> {
       description: series.description,
       images: [series.imageUrl],
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
   };
 }
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const series = await prisma.series.findMany({
-    select: { slug: true },
-  });
+  const series = await prisma.series.findMany({ select: { slug: true } });
   return series.map((s) => ({ slug: s.slug }));
 }
 
@@ -73,36 +59,44 @@ export default async function SeriesPage({ params, searchParams }: TParams) {
     where: { slug: resolvedParams.slug },
     include: {
       genres: true,
-      episodes: {
-        orderBy: {
-          number: "asc",
+      seasons: {
+        include: {
+          episodes: {
+            orderBy: { number: "asc" },
+          },
         },
+        orderBy: { number: "asc" },
       },
     },
   });
 
   if (!series) notFound();
 
-  const activeEpisode =
-    resolvedSearchParams.ep &&
-    series.episodes.find(
-      (ep) => ep.number === parseInt(resolvedSearchParams?.ep ?? "1", 10),
-    );
+  const activeEpisode = resolvedSearchParams.ep
+    ? series.seasons
+        .flatMap((season) => season.episodes)
+        .find((ep) => ep.number === parseInt(resolvedSearchParams.ep!, 10))
+    : null;
 
   return (
-    <main className="min-h-screen bg-black text-white relative">
+    <main className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Hero Background */}
       <Image
         src={series.imageUrl}
         alt={series.title}
         fill
         priority
-        className="object-cover"
+        className="object-cover absolute"
       />
 
-      <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent" />
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-linear-to-t from-black via-black/70 to-transparent" />
 
       <SeriesMain series={series} />
+
       <EpisodesCarousel series={series} />
+
+      {/* Video Modal */}
       {activeEpisode && (
         <VideoModal episode={activeEpisode} seriesSlug={series.slug} />
       )}

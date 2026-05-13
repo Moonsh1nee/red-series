@@ -51,9 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Episode: 'Episode',
   Genre: 'Genre',
-  Series: 'Series'
+  Series: 'Series',
+  Season: 'Season',
+  Episode: 'Episode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -70,21 +71,6 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
-
-
-export const EpisodeScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  number: 'number',
-  durationSec: 'durationSec',
-  thumbnailUrl: 'thumbnailUrl',
-  videoUrl: 'videoUrl',
-  seriesId: 'seriesId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeof EpisodeScalarFieldEnum]
 
 
 export const GenreScalarFieldEnum = {
@@ -112,6 +98,33 @@ export const SeriesScalarFieldEnum = {
 } as const
 
 export type SeriesScalarFieldEnum = (typeof SeriesScalarFieldEnum)[keyof typeof SeriesScalarFieldEnum]
+
+
+export const SeasonScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  title: 'title',
+  seriesId: 'seriesId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
+
+
+export const EpisodeScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  number: 'number',
+  durationSec: 'durationSec',
+  thumbnailUrl: 'thumbnailUrl',
+  videoUrl: 'videoUrl',
+  seasonId: 'seasonId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeof EpisodeScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -8,7 +8,8 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Episode'
 export type * from './models/Genre'
 export type * from './models/Series'
+export type * from './models/Season'
+export type * from './models/Episode'
 export type * from './commonInputTypes'

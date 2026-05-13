@@ -18,11 +18,6 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model Episode
- * 
- */
-export type Episode = Prisma.EpisodeModel
-/**
  * Model Genre
  * 
  */
@@ -32,3 +27,13 @@ export type Genre = Prisma.GenreModel
  * 
  */
 export type Series = Prisma.SeriesModel
+/**
+ * Model Season
+ * 
+ */
+export type Season = Prisma.SeasonModel
+/**
+ * Model Episode
+ * 
+ */
+export type Episode = Prisma.EpisodeModel

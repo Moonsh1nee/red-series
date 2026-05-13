@@ -14,6 +14,14 @@ export default async function Home() {
   const series = await prisma.series.findMany({
     include: {
       genres: true,
+      seasons: {
+        include: {
+          episodes: true,
+        },
+        orderBy: {
+          number: "asc",
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
@@ -22,33 +30,52 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-black text-white px-6 py-10">
-      <header className="mb-10 flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-wide text-red-500">
+      <header className="mb-12 flex items-center justify-between">
+        <h1 className="text-4xl font-bold tracking-wide text-red-500">
           RED Series
         </h1>
+        <p className="text-neutral-400">Latest Releases</p>
       </header>
 
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-6">
-        {series.map((item) => (
-          <Link key={item.id} href={`/series/${item.slug}`} className="group">
-            <div className="relative aspect-2/3 overflow-hidden rounded-lg">
-              <Image
-                src={item.posterUrl}
-                alt={item.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+        {series.map((item) => {
+          const totalSeasons = item.seasons.length;
+          const totalEpisodes = item.seasons.reduce(
+            (sum, season) => sum + season.episodes.length,
+            0,
+          );
 
-            <h2 className="mt-3 text-sm font-mono font-semibold">
-              {item.title}
-            </h2>
+          return (
+            <Link key={item.id} href={`/series/${item.slug}`} className="group">
+              <div className="relative aspect-2/3 overflow-hidden rounded-xl shadow-lg">
+                <Image
+                  src={item.posterUrl}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+              </div>
 
-            <p className="text-neutral-400 text-xs ">
-              {item.year} &bull; {item.genres.map((g) => g.name).join(", ")}
-            </p>
-          </Link>
-        ))}
+              <div className="mt-4 space-y-1">
+                <h2 className="text-lg font-semibold line-clamp-2 group-hover:text-red-500 transition-colors">
+                  {item.title}
+                </h2>
+
+                <p className="text-sm text-neutral-400">
+                  {item.year} • {item.genres.map((g) => g.name).join(", ")}
+                </p>
+
+                {totalSeasons > 0 && (
+                  <p className="text-xs text-neutral-500">
+                    {totalSeasons} season{totalSeasons > 1 ? "s" : ""} •{" "}
+                    {totalEpisodes} episodes
+                  </p>
+                )}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </main>
   );
