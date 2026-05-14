@@ -7,6 +7,7 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 const VIDEO_URL = "/demo.mp4";
+const SHORT_DURATION = 10; // 10 секунд для демо-видео
 
 async function main() {
   await prisma.episode.deleteMany();
@@ -14,12 +15,27 @@ async function main() {
   await prisma.series.deleteMany();
   await prisma.genre.deleteMany();
 
-  // Genres
-  const sciFi = await prisma.genre.create({ data: { name: "Sci-Fi", slug: "sci-fi" } });
-  const fantasy = await prisma.genre.create({ data: { name: "Fantasy", slug: "fantasy" } });
+  // ==================== GENRES ====================
+  const sciFi = await prisma.genre.create({
+    data: { name: "Sci-Fi", slug: "sci-fi" },
+  });
+  const fantasy = await prisma.genre.create({
+    data: { name: "Fantasy", slug: "fantasy" },
+  });
+  const drama = await prisma.genre.create({
+    data: { name: "Drama", slug: "drama" },
+  });
+  const thriller = await prisma.genre.create({
+    data: { name: "Thriller", slug: "thriller" },
+  });
+  const action = await prisma.genre.create({
+    data: { name: "Action", slug: "action" },
+  });
 
-  // === Stranger Things 5 ===
-  const st = await prisma.series.create({
+  // ==================== SERIES ====================
+
+  // 1. Stranger Things 5
+  await prisma.series.create({
     data: {
       slug: "stranger-things-5",
       title: "Stranger Things 5",
@@ -28,28 +44,20 @@ async function main() {
       ratingAge: "18+",
       imageUrl: "/images/st/hero-image.jpg",
       posterUrl: "/images/st/poster.jpg",
-      genres: { connect: { id: sciFi.id } },
+      genres: { connect: [{ id: sciFi.id }, { id: drama.id }] },
       seasons: {
         create: [
           {
             number: 1,
             title: "Season 1",
             episodes: {
-              create: [
-                { number: 1, title: "The Rift", videoUrl: VIDEO_URL, durationSec: 3600, thumbnailUrl: "/images/st/ep1.jpg" },
-                { number: 2, title: "The Final Battle", videoUrl: VIDEO_URL, durationSec: 4200, thumbnailUrl: "/images/st/ep2.jpg" },
-                { number: 3, title: "The Aftermath", videoUrl: VIDEO_URL, durationSec: 3800, thumbnailUrl: "/images/st/ep3.jpg" },
-              ],
-            },
-          },
-          {
-            number: 2,
-            title: "Season 2",
-            episodes: {
-              create: [
-                { number: 1, title: "The Return", videoUrl: VIDEO_URL, durationSec: 4100, thumbnailUrl: "/images/st/s2ep1.jpg" },
-                { number: 2, title: "New Threats", videoUrl: VIDEO_URL, durationSec: 4500, thumbnailUrl: "/images/st/s2ep2.jpg" },
-              ],
+              create: Array.from({ length: 8 }, (_, i) => ({
+                number: i + 1,
+                title: `Chapter ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/st/ep${i + 1}.jpg`,
+              })),
             },
           },
         ],
@@ -57,12 +65,13 @@ async function main() {
     },
   });
 
-  // === The Witcher ===
+  // 2. The Witcher
   await prisma.series.create({
     data: {
       slug: "the-witcher",
       title: "The Witcher",
-      description: "Geralt of Rivia, a mutated monster hunter, struggles to find his place...",
+      description:
+        "Geralt of Rivia, a mutated monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.",
       year: 2019,
       ratingAge: "18+",
       imageUrl: "/images/witcher/hero-image.jpg",
@@ -74,11 +83,13 @@ async function main() {
             number: 1,
             title: "Season 1",
             episodes: {
-              create: [
-                { number: 1, title: "The End's Beginning", videoUrl: VIDEO_URL, durationSec: 3500, thumbnailUrl: "/images/witcher/s1e1.jpg" },
-                { number: 2, title: "Four Marks", videoUrl: VIDEO_URL, durationSec: 3200, thumbnailUrl: "/images/witcher/s1e2.jpg" },
-                { number: 3, title: "Betrayer Moon", videoUrl: VIDEO_URL, durationSec: 3400, thumbnailUrl: "/images/witcher/s1e3.jpg" },
-              ],
+              create: Array.from({ length: 8 }, (_, i) => ({
+                number: i + 1,
+                title: `Episode ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/witcher/s1e${i + 1}.jpg`,
+              })),
             },
           },
         ],
@@ -86,7 +97,142 @@ async function main() {
     },
   });
 
-  console.log("✅ Seeding completed!");
+  // 3. The Boys (много эпизодов в сезоне)
+  await prisma.series.create({
+    data: {
+      slug: "the-boys",
+      title: "The Boys",
+      description:
+        "A group of vigilantes set out to take down corrupt superheroes with no more than blue-collar grit.",
+      year: 2019,
+      ratingAge: "18+",
+      imageUrl: "/images/boys/hero-image.jpg",
+      posterUrl: "/images/boys/poster.jpg",
+      genres: { connect: [{ id: action.id }, { id: thriller.id }] },
+      seasons: {
+        create: [
+          {
+            number: 1,
+            title: "Season 1",
+            episodes: {
+              create: Array.from({ length: 16 }, (_, i) => ({
+                number: i + 1,
+                title: `Episode ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/boys/s1e${i + 1}.jpg`,
+              })),
+            },
+          },
+          {
+            number: 2,
+            title: "Season 2",
+            episodes: {
+              create: Array.from({ length: 8 }, (_, i) => ({
+                number: i + 1,
+                title: `Episode ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/boys/s2e${i + 1}.jpg`,
+              })),
+            },
+          },
+          {
+            number: 3,
+            title: "Season 3",
+            episodes: {
+              create: Array.from({ length: 8 }, (_, i) => ({
+                number: i + 1,
+                title: `Episode ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/boys/s3e${i + 1}.jpg`,
+              })),
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  // 4. House of the Dragon
+  await prisma.series.create({
+    data: {
+      slug: "house-of-the-dragon",
+      title: "House of the Dragon",
+      description:
+        "The Targaryen civil war that took place about 200 years before events portrayed in 'Game of Thrones'.",
+      year: 2022,
+      ratingAge: "18+",
+      imageUrl: "/images/hotd/hero-image.jpg",
+      posterUrl: "/images/hotd/poster.jpg",
+      genres: { connect: { id: fantasy.id } },
+      seasons: {
+        create: [
+          {
+            number: 1,
+            title: "Season 1",
+            episodes: {
+              create: Array.from({ length: 10 }, (_, i) => ({
+                number: i + 1,
+                title: `Episode ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/hotd/s1e${i + 1}.jpg`,
+              })),
+            },
+          },
+          {
+            number: 2,
+            title: "Season 2",
+            episodes: {
+              create: Array.from({ length: 8 }, (_, i) => ({
+                number: i + 1,
+                title: `Episode ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/hotd/s2e${i + 1}.jpg`,
+              })),
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  // 5. Arcane (для разнообразия)
+  await prisma.series.create({
+    data: {
+      slug: "arcane",
+      title: "Arcane",
+      description:
+        "The origins of two iconic League of Legends champions are revealed.",
+      year: 2021,
+      ratingAge: "16+",
+      imageUrl: "/images/arcane/hero-image.jpg",
+      posterUrl: "/images/arcane/poster.jpg",
+      genres: { connect: [{ id: fantasy.id }, { id: action.id }] },
+      seasons: {
+        create: [
+          {
+            number: 1,
+            title: "Season 1",
+            episodes: {
+              create: Array.from({ length: 9 }, (_, i) => ({
+                number: i + 1,
+                title: `Episode ${i + 1}`,
+                videoUrl: VIDEO_URL,
+                durationSec: SHORT_DURATION,
+                thumbnailUrl: `/images/arcane/s1e${i + 1}.jpg`,
+              })),
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  console.log("✅ Seeding completed with 5 series!");
 }
 
 main()
